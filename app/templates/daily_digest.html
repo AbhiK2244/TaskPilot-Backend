@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskPilot Reminder</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #1f2937; line-height: 1.5; }
+    .container { max-width: 680px; margin: 0 auto; padding: 24px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 18px; margin-top: 24px; }
+    li { margin: 10px 0; }
+    .meta { color: #64748b; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your TaskPilot reminder</h1>
+    <p>Here is a summary of your outstanding tasks.</p>
+
+    {% if overdue %}
+      <h2>Overdue ({{ overdue|length }})</h2>
+      <ul>{% for task in overdue %}<li><strong>#{{ task.id }} — {{ task.title }}</strong><br><span class="meta">Priority: {{ task.priority }} · Due: {{ task.due_at }}</span></li>{% endfor %}</ul>
+    {% endif %}
+
+    {% if due_today %}
+      <h2>Due today ({{ due_today|length }})</h2>
+      <ul>{% for task in due_today %}<li><strong>#{{ task.id }} — {{ task.title }}</strong><br><span class="meta">Priority: {{ task.priority }} · Due: {{ task.due_at }}</span></li>{% endfor %}</ul>
+    {% endif %}
+
+    {% if upcoming %}
+      <h2>Upcoming / no deadline ({{ upcoming|length }})</h2>
+      <ul>{% for task in upcoming %}<li><strong>#{{ task.id }} — {{ task.title }}</strong><br><span class="meta">Priority: {{ task.priority }} · Due: {{ task.due_at }}</span></li>{% endfor %}</ul>
+    {% endif %}
+
+    <p class="meta">Times shown in {{ timezone }}. Keep moving one task at a time.</p>
+  </div>
+</body>
+</html>
